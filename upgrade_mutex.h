@@ -36,7 +36,7 @@ class upgrade_mutex {
       return pmutex;
     }
 
-    template <typename T = void, typename = std::enable_if_t<shared && std::is_same_v<T, void>>>
+    template <bool t = true, typename = std::enable_if_t<shared && t>>
     [[nodiscard]] lock<false> upgrade() {
       if (!pmutex) return {};
       std::unique_lock<std::mutex> try_lock_barrier(pmutex->barrier, std::try_to_lock);
